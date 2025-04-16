@@ -5,7 +5,7 @@
 
 #define slong long long
 
-int find(int *parent, int u)
+int getRoot(int *parent, int u)
 {
     while (parent[u] != u)
     {
@@ -15,12 +15,12 @@ int find(int *parent, int u)
     return u;
 }
 
-void unionSets(int *parent, int start, int end)
+void merge(int *parent, int start, int end)
 {
-    int rootU = find(parent, start);
-    int rootV = find(parent, end);
-    if (rootU != rootV)
-        parent[rootV] = rootU;
+    int root1 = find(parent, start);
+    int root2 = find(parent, end);
+    if (root1 != root2)
+        parent[root2] = root1;
 }
 
 int getEdgeLength(EDGE *edge)
@@ -118,9 +118,9 @@ int main()
     {
         int start = edges[i].start;
         int end = edges[i].end;
-        if (find(parent, start) != find(parent, end))
+        if (getRoot(parent, start) != getRoot(parent, end))
         {
-            unionSets(parent, start, end);
+            merge(parent, start, end);
             mst_edges[mst_size++] = edges[i];
         }
     }
