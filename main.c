@@ -3,6 +3,8 @@
 #include "edge.h"
 #include "sort.h"
 
+#define slong long long
+
 int find(int *parent, int u)
 {
     while (parent[u] != u)
@@ -51,8 +53,8 @@ int main()
         return 0;
     }
 
-    long long maxEdges = (long long)N * (N - 1) / 2;
-    if (M < 0 || M > maxEdges)
+    slong max_edges = (slong)N * (N - 1) / 2;
+    if (M < 0 || M > max_edges)
     {
         printf("bad number of edges\n");
         return 0;
@@ -103,35 +105,35 @@ int main()
     for (int i = 0; i < N; i++)
         parent[i] = i;
 
-    EDGE *mstEdges = (EDGE *)malloc((N - 1) * sizeof(EDGE));
-    if (mstEdges == NULL)
+    EDGE *mst_edges = (EDGE *)malloc((N - 1) * sizeof(EDGE));
+    if (mst_edges == NULL)
     {
         free(edges);
         free(parent);
         return 0;
     }
 
-    int mstSize = 0;
-    for (int i = 0; i < M && mstSize < N - 1; i++)
+    int mst_size = 0;
+    for (int i = 0; i < M && mst_size < N - 1; i++)
     {
         int start = edges[i].start;
         int end = edges[i].end;
         if (find(parent, start) != find(parent, end))
         {
             unionSets(parent, start, end);
-            mstEdges[mstSize++] = edges[i];
+            mst_edges[mst_size++] = edges[i];
         }
     }
 
-    if (mstSize != N - 1 && N != 0)
+    if (mst_size != N - 1 && N != 0)
         printf("no spanning tree\n");
     else
-        for (int i = 0; i < mstSize; i++)
-            printf("%d %d\n", mstEdges[i].start + 1, mstEdges[i].end + 1);
+        for (int i = 0; i < mst_size; i++)
+            printf("%d %d\n", mst_edges[i].start + 1, mst_edges[i].end + 1);
 
     free(edges);
     free(parent);
-    free(mstEdges);
+    free(mst_edges);
 
     return 0;
 }
