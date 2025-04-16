@@ -15,10 +15,10 @@ int find(int *parent, int u)
     return u;
 }
 
-void unionSets(int *parent, int u, int v)
+void unionSets(int *parent, int start, int end)
 {
-    int rootU = find(parent, u);
-    int rootV = find(parent, v);
+    int rootU = find(parent, start);
+    int rootV = find(parent, end);
     if (rootU != rootV)
         parent[rootV] = rootU;
 }
